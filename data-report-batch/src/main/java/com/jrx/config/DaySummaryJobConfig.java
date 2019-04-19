@@ -66,10 +66,10 @@ public class DaySummaryJobConfig extends BaseConfig {
                 LocalDate now = LocalDate.now();
                 String dateStr = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
                 // 创建索引
-                String s_index = uuid + "_" + dateStr;
+                String index = uuid + "_" + dateStr;
                 daySummary.setCustId(custId);
                 daySummary.setSurname(customer.getSurname());
-                daySummary.setsIndex(s_index);
+                daySummary.setsIndex(index);
                 daySummary.setUpdateTime(new Date());
                 return daySummary;
             }

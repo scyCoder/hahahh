@@ -18,10 +18,6 @@
 
 
     <modules>
-        <module>spring-batch</module>
-        <module>eureka-server</module>
-        <module>eureka-producer-client</module>
-        <module>eureka-consumer-client</module>
         <module>data-report-batch</module>
         <module>data-report-project</module>
     </modules>

@@ -21,6 +21,7 @@ public class ParentJobConfig extends BaseConfig {
 
     @Autowired
     private Job readDataJobConfig;
+
     @Autowired
     private Job daySummary;
 
