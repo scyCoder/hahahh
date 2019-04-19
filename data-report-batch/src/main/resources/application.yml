@@ -1,0 +1,18 @@
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/jrx_db?serverTimezone=GMT%2B8
+    username: root
+    password: root
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      max-lifetime: 1800000
+  batch:
+    job:
+      names: parentJob9
+  main:
+    allow-bean-definition-overriding: true

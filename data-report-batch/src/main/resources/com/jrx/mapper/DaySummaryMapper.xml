@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrx.mapper.DaySummaryMapper">
+    <resultMap id="BaseResultMap" type="com.jrx.model.DaySummary">
+        <result column="s_index" jdbcType="VARCHAR" property="sIndex"/>
+        <result column="cust_id" jdbcType="INTEGER" property="custId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="trans_date" jdbcType="DATE" property="transDate"/>
+        <result column="surname" jdbcType="VARCHAR" property="surname"/>
+        <result column="tran_max_amt" jdbcType="DECIMAL" property="tranMaxAmt"/>
+        <result column="pay_amt" jdbcType="DECIMAL" property="payAmt"/>
+        <result column="tran_cnt" jdbcType="INTEGER" property="tranCnt"/>
+        <result column="pay_cnt" jdbcType="INTEGER" property="payCnt"/>
+        <result column="tran_amt" jdbcType="DECIMAL" property="tranAmt"/>
+    </resultMap>
+
+    <select id="getCurrDateData" parameterType="int" resultMap="BaseResultMap">
+        select txn_datatime as trans_date,
+            MAX(bill) as tran_max_amt,
+            SUM(CASE WHEN trans_type='还款' THEN bill ELSE 0 END) as pay_amt,
+            SUM(CASE  trans_type WHEN '消费' THEN 1 ELSE 0 END) as tran_cnt,
+            SUM(CASE trans_type WHEN '还款' THEN 1 ELSE 0 END) as pay_cnt,
+            SUM(bill) as tran_amt
+            from tb_deal_detail
+            where cust_id = #{custId,jdbcType=INTEGER} and to_days(txn_datatime)=to_days(now())
+
+    </select>
+
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrx.mapper.DealDetailMapper">
+    <resultMap id="BaseResultMap" type="com.jrx.model.DealDetail">
+        <result column="trans_id" property="transId" jdbcType="INTEGER"/>
+        <result column="cust_id" property="custId" jdbcType="INTEGER"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="card_nbr" property="cardNbr" jdbcType="VARCHAR"/>
+        <result column="tranno" property="tranno" jdbcType="INTEGER"/>
+        <result column="month_nbr" property="monthNbr" jdbcType="INTEGER"/>
+        <result column="bill" property="bill" jdbcType="DECIMAL"/>
+        <result column="trans_type" property="transType" jdbcType="VARCHAR"/>
+        <result column="txn_datatime" property="txnDatatime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="totalInMonth" type="com.jrx.model.DealData">
+        <result column="total_pay" property="totalPayInMonth" jdbcType="INTEGER"/>
+        <result column="total_tran" property="totalTranInMonth" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.jrx.model.DealDetail">
+    insert into tb_deal_detail (trans_id, cust_id, account, 
+      card_nbr, tranno, month_nbr, 
+      bill, trans_type, txn_datatime
+      )
+    values (#{transId,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, 
+      #{cardNbr,jdbcType=VARCHAR}, #{tranno,jdbcType=INTEGER}, #{monthNbr,jdbcType=INTEGER}, 
+      #{bill,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{txnDatatime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+    <delete id="deleteByDealDetailTransId" parameterType="int">
+        delete from tb_deal_detail where trans_id = #{id}
+    </delete>
+
+    <select id="findByDealDetailTransId" parameterType="int" resultMap="BaseResultMap">
+        select * from tb_deal_detail where trans_id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.jrx.model.DealDetail">
+        update tb_deal_detail
+        <set>
+            <if test="custId != null">
+                cust_id = #{custId,jdbcType=INTEGER},
+            </if>
+            <if test="account != null">
+                accout = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="cardNbr != null">
+                card_nbr = #{cardNbr,jdbcType=VARCHAR},
+            </if>
+            <if test="tranno != null">
+                tranno = #{tranno,jdbcType=INTEGER},
+            </if>
+            <if test="monthNbr != null">
+                month_nbr = #{monthNbr,jdbcType=INTEGER},
+            </if>
+            <if test="bill != null">
+                bill = #{bill,jdbcType=DECIMAL}
+            </if>
+            <if test="transType != null">
+                trans_type = #{transType,jdbcType=VARCHAR}
+            </if>
+            <if test="txnDatatime != null">
+                txn_datatime = #{txnDatatime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where trans_id = #{transId,jdbcType=INTEGER}
+    </update>
+
+    <select id="findAllDealDetail" resultMap="BaseResultMap">
+        select * from tb_deal_detail
+    </select>
+
+    <select id="findDealDetailByPage" parameterType="map" resultMap="BaseResultMap">
+        select * from tb_deal_detail limit #{pageNum},#{pageSize}
+    </select>
+
+    <select id="findTotalInMonthByCustId" parameterType="int" resultMap="totalInMonth">
+        select
+        SUM(CASE WHEN trans_type='还款' THEN bill ELSE 0 END) as total_pay,
+        SUM(CASE  trans_type WHEN '消费' THEN bill ELSE 0 END) as total_tran
+        from tb_deal_detail as deal
+        where cust_id = #{custId} <![CDATA[and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(deal.txn_datatime)
+        ]]>
+    </select>
+
+    <select id="findDayDealByCustId" parameterType="int" resultType="com.jrx.model.DayDeal">
+
+        SELECT IFNULL(SUM(bill),0) as dealMoney ,DATE_FORMAT(txn_datatime,'%m-%d') AS dateStr
+        FROM tb_deal_detail
+        where txn_datatime > DATE_SUB(now(), INTERVAL 1 MONTH) and cust_id = #{custId}
+        GROUP BY txn_datatime
+    </select>
+
+    <select id="findThreeMonthsTranCountByCustId" parameterType="int" resultType="com.jrx.model.DayDeal">
+
+        SELECT IFNULL(count(*),0)
+        AS dealMoney,DATE_FORMAT(a.txn_datatime,'%Y-%m')
+        AS dateStr
+        from tb_deal_detail a
+        WHERE  a.txn_datatime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH) and a.cust_id = #{custId} and a.trans_type = '消费'
+        GROUP BY dateStr
+    </select>
+
+    <select id="findByCustId" parameterType="int" resultMap="BaseResultMap">
+          select * from tb_deal_detail where cust_id = #{id}
+    </select>
+
+    <select id="findByType" parameterType="string" resultMap="BaseResultMap">
+        select * from tb_deal_detail where trans_type = #{transType}
+    </select>
+
+    <select id="findByDate" parameterType="string" resultMap="BaseResultMap">
+        select * from tb_deal_detail where txn_datatime = #{date}
+    </select>
+
+
+</mapper>
