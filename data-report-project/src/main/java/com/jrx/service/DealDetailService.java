@@ -79,6 +79,7 @@ public interface DealDetailService {
 
     /**
      * 查询客户进三个内的消费笔数
+     *
      * @param custId
      * @return
      */
@@ -86,6 +87,7 @@ public interface DealDetailService {
 
     /**
      * 根据客户的id查询
+     *
      * @param custId
      * @return
      */

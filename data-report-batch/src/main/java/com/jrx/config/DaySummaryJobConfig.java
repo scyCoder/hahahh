@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
+
 /**
  * @Author: sunchuanyin
  * @Date: 2019/4/16 17:46
@@ -51,24 +52,21 @@ public class DaySummaryJobConfig extends BaseConfig {
 
     @Bean
     public ItemProcessor<Customer, DaySummary> daySummaryProcessor() {
-        return new ItemProcessor<Customer, DaySummary>() {
-            @Override
-            public DaySummary process(Customer customer) throws Exception {
-                Integer custId = customer.getCustId();
-                // 单笔最大值
-                DaySummary daySummary = new DaySummaryServiceImpl().getCurrDateData(custId);
-                // 根据uuid和当前日期创建索引
-                UUID uuid = UUID.randomUUID();
-                LocalDate now = LocalDate.now();
-                String dateStr = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-                // 创建索引
-                String index = uuid + "_" + dateStr;
-                daySummary.setCustId(custId);
-                daySummary.setSurname(customer.getSurname());
-                daySummary.setsIndex(index);
-                daySummary.setUpdateTime(new Date());
-                return daySummary;
-            }
+        return customer -> {
+            Integer custId = customer.getCustId();
+            // 单笔最大值
+            DaySummary daySummary = new DaySummaryServiceImpl().getCurrDateData(custId);
+            // 根据uuid和当前日期创建索引
+            UUID uuid = UUID.randomUUID();
+            LocalDate now = LocalDate.now();
+            String dateStr = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            // 创建索引
+            String index = uuid + "_" + dateStr;
+            daySummary.setCustId(custId);
+            daySummary.setSurname(customer.getSurname());
+            daySummary.setsIndex(index);
+            daySummary.setUpdateTime(new Date());
+            return daySummary;
         };
     }
 
@@ -79,7 +77,7 @@ public class DaySummaryJobConfig extends BaseConfig {
         writer.setSql("insert into tb_day_summary(s_index,cust_id,update_time,trans_date,surname,tran_max_amt," +
                 "pay_amt,tran_cnt,pay_cnt,tran_amt) values (:sIndex,:custId," +
                 ":updateTime,:transDate,:surname,:tranMaxAmt,:payAmt,:tranCnt,:payCnt,:tranAmt)");
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<DaySummary>());
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider());
         return writer;
     }
 

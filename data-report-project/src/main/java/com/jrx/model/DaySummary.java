@@ -14,7 +14,7 @@ import java.util.Date;
  * @Date: 2019/4/15 10:41
  * @Version 1.0
  */
-@ApiModel(value = "DaySummary",description = "客户日汇总计信息实体类")
+@ApiModel(value = "DaySummary", description = "客户日汇总计信息实体类")
 public class DaySummary implements Serializable {
 
 

@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableBatchProcessing
 public class DataReportBatchApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DataReportBatchApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DataReportBatchApplication.class, args);
+    }
 
 }

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @Date: 2019/4/15 10:41
  * @Version 1.0
  */
-@ApiModel(value = "Customer",description = "客户信息实体类")
+@ApiModel(value = "Customer", description = "客户信息实体类")
 public class Customer implements Serializable {
 
 

@@ -11,13 +11,13 @@
         <result column="address" property="address" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="insert" parameterType="com.jrx.model.Customer">
-    insert into tb_customer (surname, gender,
-      educa_des, mar_des, birthday, 
-      address)
-    values (#{surname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
-      #{educaDes,jdbcType=VARCHAR}, #{marDes,jdbcType=VARCHAR}, #{birthday,jdbcType=INTEGER}, 
-      #{address,jdbcType=VARCHAR})
-  </insert>
+        insert into tb_customer (surname, gender,
+        educa_des, mar_des, birthday,
+        address)
+        values (#{surname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
+        #{educaDes,jdbcType=VARCHAR}, #{marDes,jdbcType=VARCHAR}, #{birthday,jdbcType=INTEGER},
+        #{address,jdbcType=VARCHAR})
+    </insert>
 
     <delete id="deleteByCustomerId" parameterType="int">
         delete from tb_customer where cust_id = #{id}

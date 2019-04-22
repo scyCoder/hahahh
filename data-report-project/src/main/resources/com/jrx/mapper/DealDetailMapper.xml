@@ -18,15 +18,15 @@
         <result column="total_tran" property="totalTranInMonth" jdbcType="INTEGER"/>
     </resultMap>
     <insert id="insert" parameterType="com.jrx.model.DealDetail">
-    insert into tb_deal_detail (trans_id, cust_id, account, 
-      card_nbr, tranno, month_nbr, 
-      bill, trans_type, txn_datatime
-      )
-    values (#{transId,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, 
-      #{cardNbr,jdbcType=VARCHAR}, #{tranno,jdbcType=INTEGER}, #{monthNbr,jdbcType=INTEGER}, 
-      #{bill,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{txnDatatime,jdbcType=TIMESTAMP}
-      )
-  </insert>
+        insert into tb_deal_detail (trans_id, cust_id, account,
+        card_nbr, tranno, month_nbr,
+        bill, trans_type, txn_datatime
+        )
+        values (#{transId,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR},
+        #{cardNbr,jdbcType=VARCHAR}, #{tranno,jdbcType=INTEGER}, #{monthNbr,jdbcType=INTEGER},
+        #{bill,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, #{txnDatatime,jdbcType=TIMESTAMP}
+        )
+    </insert>
 
     <delete id="deleteByDealDetailTransId" parameterType="int">
         delete from tb_deal_detail where trans_id = #{id}
@@ -78,7 +78,7 @@
     <select id="findTotalInMonthByCustId" parameterType="int" resultMap="totalInMonth">
         select
         SUM(CASE WHEN trans_type='还款' THEN bill ELSE 0 END) as total_pay,
-        SUM(CASE  trans_type WHEN '消费' THEN bill ELSE 0 END) as total_tran
+        SUM(CASE trans_type WHEN '消费' THEN bill ELSE 0 END) as total_tran
         from tb_deal_detail as deal
         where cust_id = #{custId} <![CDATA[and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(deal.txn_datatime)
         ]]>
@@ -98,12 +98,12 @@
         AS dealMoney,DATE_FORMAT(a.txn_datatime,'%Y-%m')
         AS dateStr
         from tb_deal_detail a
-        WHERE  a.txn_datatime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH) and a.cust_id = #{custId} and a.trans_type = '消费'
+        WHERE a.txn_datatime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH) and a.cust_id = #{custId} and a.trans_type = '消费'
         GROUP BY dateStr
     </select>
 
     <select id="findByCustId" parameterType="int" resultMap="BaseResultMap">
-          select * from tb_deal_detail where cust_id = #{id}
+        select * from tb_deal_detail where cust_id = #{id}
     </select>
 
     <select id="findByType" parameterType="string" resultMap="BaseResultMap">

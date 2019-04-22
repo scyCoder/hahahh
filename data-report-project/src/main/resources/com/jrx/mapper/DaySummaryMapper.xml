@@ -15,15 +15,15 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.jrx.model.DaySummary">
-    insert into tb_day_summary (s_index, cust_id, update_time, 
-      trans_date, surname, tran_max_amt, 
-      pay_amt, tran_cnt, pay_cnt, 
-      tran_amt)
-    values (#{sIndex,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{transDate,jdbcType=DATE}, #{surname,jdbcType=VARCHAR}, #{tranMaxAmt,jdbcType=DECIMAL}, 
-      #{payAmt,jdbcType=DECIMAL}, #{tranCnt,jdbcType=INTEGER}, #{payCnt,jdbcType=INTEGER}, 
-      #{tranAmt,jdbcType=DECIMAL})
-  </insert>
+        insert into tb_day_summary (s_index, cust_id, update_time,
+        trans_date, surname, tran_max_amt,
+        pay_amt, tran_cnt, pay_cnt,
+        tran_amt)
+        values (#{sIndex,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+        #{transDate,jdbcType=DATE}, #{surname,jdbcType=VARCHAR}, #{tranMaxAmt,jdbcType=DECIMAL},
+        #{payAmt,jdbcType=DECIMAL}, #{tranCnt,jdbcType=INTEGER}, #{payCnt,jdbcType=INTEGER},
+        #{tranAmt,jdbcType=DECIMAL})
+    </insert>
 
     <delete id="deleteByCustomerId" parameterType="int">
         delete from tb_day_summary where cust_id = #{id}

@@ -5,7 +5,6 @@ import com.jrx.model.DealData;
 import com.jrx.model.DealDetail;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

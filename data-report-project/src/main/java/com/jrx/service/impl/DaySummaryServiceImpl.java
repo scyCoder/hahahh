@@ -33,7 +33,6 @@ public class DaySummaryServiceImpl implements DaySummaryService {
         daySummary.setUpdateTime(new Date());
 
 
-
         return daySummaryMapper.insert(daySummary);
     }
 
