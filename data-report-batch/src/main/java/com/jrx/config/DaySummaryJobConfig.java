@@ -12,6 +12,7 @@ import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
@@ -33,7 +34,10 @@ import java.util.UUID;
 public class DaySummaryJobConfig extends BaseConfig {
 
     @Autowired
+    @Qualifier("daySummaryMapper")
     private DaySummaryMapper daySummaryMapper;
+
+
 
     @Bean
     public Job daySummary() {

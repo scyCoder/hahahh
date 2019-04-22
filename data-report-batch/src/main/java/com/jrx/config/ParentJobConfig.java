@@ -40,7 +40,7 @@ public class ParentJobConfig extends BaseConfig {
      */
     @Bean
     public Job parentJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return jobBuilderFactory.get("parentJob9")
+        return jobBuilderFactory.get("parentJob21")
                 .start(jobConfigStep(jobRepository, transactionManager))
                 .next(daySummaryJobStep(jobRepository, transactionManager))
                 .build();
