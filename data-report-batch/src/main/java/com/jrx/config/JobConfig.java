@@ -34,6 +34,8 @@ import java.util.Date;
 public class JobConfig extends BaseConfig {
 
 
+    private static final String CUST_ID = "cust_id";
+
     /**
      * 创建读去客户信息和交易明细的数据
      *
@@ -96,7 +98,8 @@ public class JobConfig extends BaseConfig {
         // 创建解析数据对象
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         // 设置字段名称
-        tokenizer.setNames(new String[]{"cust_id", "surname", "gender", "educa_des", "mar_des", "birthday", "address"});
+        String[] str = {CUST_ID, "surname", "gender", "educa_des", "mar_des", "birthday", "address"};
+        tokenizer.setNames(str);
         // 创建映射对象
         DefaultLineMapper<Customer> mapper = new DefaultLineMapper();
         mapper.setLineTokenizer(tokenizer);
@@ -105,7 +108,7 @@ public class JobConfig extends BaseConfig {
             @Override
             public Customer mapFieldSet(FieldSet fieldSet) throws BindException {
                 Customer customer = new Customer();
-                customer.setCustId(fieldSet.readInt("cust_id"));
+                customer.setCustId(fieldSet.readInt(CUST_ID));
                 customer.setSurname(fieldSet.readString("surname"));
                 customer.setGender(fieldSet.readString("gender"));
                 customer.setEducaDes(fieldSet.readString("educa_des"));
@@ -166,8 +169,9 @@ public class JobConfig extends BaseConfig {
         // 创建解析数据对象
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         // 设置字段名称
-        tokenizer.setNames(new String[]{"trans_id", "cust_id", "account", "card_nbr", "tranno", "month_nbr", "bill",
-                "trans_type", "txn_datatime"});
+        String[] str = {"trans_id", CUST_ID, "account", "card_nbr", "tranno", "month_nbr", "bill",
+                "trans_type", "txn_datatime"};
+        tokenizer.setNames(str);
         // 创建映射对象
         DefaultLineMapper<DealDetail> mapper = new DefaultLineMapper();
         mapper.setLineTokenizer(tokenizer);
@@ -177,7 +181,7 @@ public class JobConfig extends BaseConfig {
             public DealDetail mapFieldSet(FieldSet fieldSet) throws BindException {
                 DealDetail dealDetail = new DealDetail();
                 dealDetail.setTransId(fieldSet.readInt("trans_id"));
-                dealDetail.setCustId(fieldSet.readInt("cust_id"));
+                dealDetail.setCustId(fieldSet.readInt(CUST_ID));
                 dealDetail.setAccount(fieldSet.readString("account"));
                 dealDetail.setCardNbr(fieldSet.readString("card_nbr"));
                 dealDetail.setTranno(fieldSet.readInt("tranno"));

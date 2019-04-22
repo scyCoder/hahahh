@@ -1,8 +1,8 @@
 package com.jrx.config;
 
-import com.jrx.mapper.DaySummaryMapper;
 import com.jrx.model.Customer;
 import com.jrx.model.DaySummary;
+import com.jrx.service.impl.DaySummaryServiceImpl;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.item.ItemProcessor;
@@ -11,8 +11,6 @@ import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,12 +30,6 @@ import java.util.UUID;
  */
 @Configuration
 public class DaySummaryJobConfig extends BaseConfig {
-
-    @Autowired
-    @Qualifier("daySummaryMapper")
-    private DaySummaryMapper daySummaryMapper;
-
-
 
     @Bean
     public Job daySummary() {
@@ -64,7 +56,7 @@ public class DaySummaryJobConfig extends BaseConfig {
             public DaySummary process(Customer customer) throws Exception {
                 Integer custId = customer.getCustId();
                 // 单笔最大值
-                DaySummary daySummary = daySummaryMapper.getCurrDateData(custId);
+                DaySummary daySummary = new DaySummaryServiceImpl().getCurrDateData(custId);
                 // 根据uuid和当前日期创建索引
                 UUID uuid = UUID.randomUUID();
                 LocalDate now = LocalDate.now();

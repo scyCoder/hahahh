@@ -102,12 +102,10 @@ public class CustomerController {
     @CrossOrigin(origins = "http://localhost:8000", allowCredentials = "true")
     public ResponseData findAllCustomer() {
         List<Customer> customerList = customerService.findAllCustomer();
-        if (customerList.size() != 0) {
-            return new ResponseData(customerList, "200", "查询成功");
-        } else if (customerList.size() == 0) {
-            return new ResponseData(null, "200", "查询成功，但没数据");
+        if (customerList.isEmpty()) {
+            return new ResponseData(null, "500", "查询错误");
         }
-        return new ResponseData(null, "500", "查询错误");
+        return new ResponseData(customerList, "200", "查询成功");
     }
 
     /**
@@ -127,12 +125,10 @@ public class CustomerController {
     public ResponseData findCustomerByPage(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer
             pageSize) {
         List<Customer> customerByPageList = customerService.findCustomerByPage(pageNum, pageSize);
-        if (customerByPageList.size() != 0) {
-            return new ResponseData(customerByPageList, "200", "查询成功");
-        } else if (customerByPageList.size() == 0) {
-            return new ResponseData(null, "200", "查询成功，但没数据");
+        if (customerByPageList.isEmpty()) {
+            return new ResponseData(null, "500", "查询错误");
         }
-        return new ResponseData(null, "500", "查询错误");
+        return new ResponseData(customerByPageList, "200", "查询成功");
 
     }
 }

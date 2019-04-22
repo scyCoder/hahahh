@@ -105,12 +105,11 @@ public class DealDetailController {
     @GetMapping("/find-all")
     public ResponseData findAllDealDetail() {
         List<DealDetail> dealDetailList = dealDetailService.findAllDealDetail();
-        if (dealDetailList.size() != 0) {
-            return new ResponseData(dealDetailList, "200", "查询成功");
-        } else if (dealDetailList.size() == 0) {
-            return new ResponseData(null, "200", "查询成功，但没数据");
+        if (dealDetailList.isEmpty()) {
+            return new ResponseData(null, "500", "查询错误");
         }
-        return new ResponseData(null, "500", "查询错误");
+
+        return new ResponseData(dealDetailList, "200", "查询成功");
     }
 
     /**
@@ -129,12 +128,11 @@ public class DealDetailController {
     public ResponseData findDealDetailByPage(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize")
             Integer pageSize) {
         List<DealDetail> dealDetailByPageList = dealDetailService.findDealDetailByPage(pageNum, pageSize);
-        if (dealDetailByPageList.size() != 0) {
-            return new ResponseData(dealDetailByPageList, "200", "查询成功");
-        } else if (dealDetailByPageList.size() == 0) {
-            return new ResponseData(null, "200", "查询成功，但没数据");
+        if (dealDetailByPageList.isEmpty()) {
+            return new ResponseData(null, "500", "查询错误");
         }
-        return new ResponseData(null, "500", "查询错误");
+        return new ResponseData(dealDetailByPageList, "200", "查询成功");
+
 
     }
 

@@ -28,8 +28,8 @@ public class DaySummaryServiceImpl implements DaySummaryService {
         LocalDate now = LocalDate.now();
         String dateStr = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         // 创建索引
-        String s_index = uuid + "_" + dateStr;
-        daySummary.setsIndex(s_index);
+        String index = uuid + "_" + dateStr;
+        daySummary.setsIndex(index);
         daySummary.setUpdateTime(new Date());
 
 

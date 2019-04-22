@@ -17,7 +17,7 @@ public class ResponseData {
      * 返回的数据
      */
     @ApiModelProperty("返回的数据")
-    private Object responseData;
+    private Object responseDataObj;
 
     /**
      * 返回的状态码
@@ -31,18 +31,18 @@ public class ResponseData {
     @ApiModelProperty("提示信息")
     private String responseMessgae;
 
-    public ResponseData(Object responseData, String responseStatusCode, String responseMessgae) {
-        this.responseData = responseData;
+    public ResponseData(Object responseDataObj, String responseStatusCode, String responseMessgae) {
+        this.responseDataObj = responseDataObj;
         this.responseStatusCode = responseStatusCode;
         this.responseMessgae = responseMessgae;
     }
 
-    public Object getResponseData() {
-        return responseData;
+    public Object getResponseDataObj() {
+        return responseDataObj;
     }
 
-    public void setResponseData(Object responseData) {
-        this.responseData = responseData;
+    public void setResponseDataObj(Object responseDataObj) {
+        this.responseDataObj = responseDataObj;
     }
 
     public String getResponseStatusCode() {
@@ -64,7 +64,7 @@ public class ResponseData {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ResponseData{");
-        sb.append("responseData=").append(responseData);
+        sb.append("responseDataObj=").append(responseDataObj);
         sb.append(", responseStatusCode='").append(responseStatusCode).append('\'');
         sb.append(", responseMessgae='").append(responseMessgae).append('\'');
         sb.append('}');

@@ -18,13 +18,6 @@ import org.springframework.transaction.PlatformTransactionManager;
  */
 @Configuration
 public class ParentJobConfig extends BaseConfig {
-
-    @Autowired
-    private Job readDataJobConfig;
-
-    @Autowired
-    private Job daySummary;
-
     /**
      * 启动对象
      */
@@ -57,7 +50,7 @@ public class ParentJobConfig extends BaseConfig {
     public Step daySummaryJobStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
 
         return new JobStepBuilder(new StepBuilder("daySummaryJobStep"))
-                .job(daySummary)
+                .job(new DaySummaryJobConfig().daySummary())
                 // 指定启动对象，这里是启动父job
                 .launcher(jobLauncher)
                 // 持久化
@@ -75,7 +68,7 @@ public class ParentJobConfig extends BaseConfig {
     @Bean
     public Step jobConfigStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new JobStepBuilder(new StepBuilder("jobConfigStep"))
-                .job(readDataJobConfig)
+                .job(new JobConfig().readDataJobConfig())
                 // 指定启动对象，这里是启动父job
                 .launcher(jobLauncher)
                 // 持久化

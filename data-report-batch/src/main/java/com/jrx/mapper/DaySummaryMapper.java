@@ -2,11 +2,8 @@ package com.jrx.mapper;
 
 import com.jrx.model.DaySummary;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Mapper
-@Component
 public interface DaySummaryMapper {
 
     /**

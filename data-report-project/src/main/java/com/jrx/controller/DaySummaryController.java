@@ -101,12 +101,12 @@ public class DaySummaryController {
     @GetMapping("/find-all")
     public ResponseData findAllCustomer() {
         List<DaySummary> daySummaryList = daySummaryService.findAllDaySummary();
-        if (daySummaryList.size() != 0) {
-            return new ResponseData(daySummaryList, "200", "查询成功");
-        } else if (daySummaryList.size() == 0) {
-            return new ResponseData(null, "200", "查询成功，但没数据");
+        if (daySummaryList.isEmpty()) {
+            return new ResponseData(null, "500", "查询错误");
+
         }
-        return new ResponseData(null, "500", "查询错误");
+        return new ResponseData(daySummaryList, "200", "查询成功");
+
     }
 
     /**
@@ -125,12 +125,11 @@ public class DaySummaryController {
     public ResponseData findCustomerByPage(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer
             pageSize) {
         List<DaySummary> daySummaryByPageList = daySummaryService.findDaySummaryByPage(pageNum, pageSize);
-        if (daySummaryByPageList.size() != 0) {
-            return new ResponseData(daySummaryByPageList, "200", "查询成功");
-        } else if (daySummaryByPageList.size() == 0) {
-            return new ResponseData(null, "200", "查询成功，但没数据");
+        if (daySummaryByPageList.isEmpty()) {
+            return new ResponseData(null, "500", "查询错误");
         }
-        return new ResponseData(null, "500", "查询错误");
+        return new ResponseData(daySummaryByPageList, "200", "查询成功");
+
 
     }
 
